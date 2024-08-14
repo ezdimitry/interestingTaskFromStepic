@@ -1,18 +1,37 @@
-def is_password_good(password):
-    if len(password) < 8:
+'''Действительный пароль BEEGEEK банка имеет вид a:b:c, где a, b и c – натуральные числа.
+Поскольку основатель BEEGEEK фанатеет от математики, то он решил:
+число a – должно быть палиндромом;
+число b – должно быть простым;
+число c – должно быть четным.'''
+
+
+def is_palindrome(num):
+    return str(num) == str(num)[::-1]
+
+
+def is_prime(num):
+    if num == 1:
         return False
-    flagD = False
-    flagL = False
-    flagU = False
-    for c in password:
-        if c.isdigit():
-            flagD = True
-        elif c.islower():
-            flagL = True
-        elif c.isupper():
-            flagU = True
-    return flagD and flagL and flagU
+    for i in range(2, int(num ** 0.5) + 1):
+        if num % i == 0:
+            return False
+
+    return True
 
 
-txt = input()
-print(is_password_good(txt))
+def is_even(num):
+    return num % 2 == 0
+
+
+def is_valid_password(password):
+    l = password.split(":")
+    if len(l) == 3:
+        l = [int(el) for el in l]
+        a, b, c = l[0], l[1], l[2]
+        return is_palindrome(a) and is_prime(b) and is_even(c)
+
+    return False
+
+
+psw = input()
+print(is_valid_password(psw))
